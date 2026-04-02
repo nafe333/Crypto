@@ -19,11 +19,13 @@ class CoinDataService {
     }
     
        //MARK: - Behaviour
-    private func getCoins(){
+     func getCoins(){
         let urlString = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&price_change_percentage=24h&order=market_cap_desc&per_page=250&page=1&sparkline=true"
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         coinSubscriber = NetworkingManager.download(url: URL(string: urlString)!)
-            .decode(type: [CoinModel].self, decoder: JSONDecoder())
+            .decode(type: [CoinModel].self, decoder: decoder)
             .sink(receiveCompletion: NetworkingManager.handleCompletion(completion:), receiveValue: { [weak self] (returnedCoins) in
                 self? .allCoins = returnedCoins
                 self?.coinSubscriber?.cancel()
