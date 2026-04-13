@@ -33,6 +33,9 @@
 		AA5893092F6E37620073EFE3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5893082F6E37620073EFE3 /* HomeView.swift */; };
 		AA58930B2F6E38A60073EFE3 /* CircleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58930A2F6E38A60073EFE3 /* CircleButtonView.swift */; };
 		AA58930D2F6E3CE00073EFE3 /* CircleButtonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58930C2F6E3CE00073EFE3 /* CircleButtonAnimation.swift */; };
+		AA6976672F8CA0F20097803B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AA6976662F8CA0F20097803B /* Lottie */; };
+		AA69766C2F8CA2FE0097803B /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69766B2F8CA2FE0097803B /* LottieView.swift */; };
+		AA69766E2F8CA4420097803B /* Bitcoin.json in Resources */ = {isa = PBXBuildFile; fileRef = AA69766D2F8CA4420097803B /* Bitcoin.json */; };
 		AA8B9D642F78B2FF0070C0A1 /* CoinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8B9D632F78B2FF0070C0A1 /* CoinImageView.swift */; };
 		AA8B9D662F78B31B0070C0A1 /* CoinImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8B9D652F78B31B0070C0A1 /* CoinImageViewModel.swift */; };
 		AA8B9D682F78B3DE0070C0A1 /* CoinImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8B9D672F78B3DE0070C0A1 /* CoinImageService.swift */; };
@@ -79,6 +82,8 @@
 		AA5893082F6E37620073EFE3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		AA58930A2F6E38A60073EFE3 /* CircleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButtonView.swift; sourceTree = "<group>"; };
 		AA58930C2F6E3CE00073EFE3 /* CircleButtonAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButtonAnimation.swift; sourceTree = "<group>"; };
+		AA69766B2F8CA2FE0097803B /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		AA69766D2F8CA4420097803B /* Bitcoin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Bitcoin.json; sourceTree = "<group>"; };
 		AA8B9D632F78B2FF0070C0A1 /* CoinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageView.swift; sourceTree = "<group>"; };
 		AA8B9D652F78B31B0070C0A1 /* CoinImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageViewModel.swift; sourceTree = "<group>"; };
 		AA8B9D672F78B3DE0070C0A1 /* CoinImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageService.swift; sourceTree = "<group>"; };
@@ -102,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA6976672F8CA0F20097803B /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +149,7 @@
 				AA3EE5E92F721FD500594EA2 /* NetworkingManager.swift */,
 				AA8B9D692F79D97E0070C0A1 /* LocalFileManager.swift */,
 				AAF9F1D02F7E078600FB9B3B /* HapticManager.swift */,
+				AA69766B2F8CA2FE0097803B /* LottieView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -179,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				AA5892F12F6E26F40073EFE3 /* CryptoApp.swift */,
+				AA6976682F8CA1760097803B /* Resources */,
 				AA3EE5E82F721FBE00594EA2 /* Utilities */,
 				AA5892FF2F6E287B0073EFE3 /* Extensions */,
 				AA3EE5E52F72021300594EA2 /* Services */,
@@ -272,6 +280,14 @@
 			path = CircleButton;
 			sourceTree = "<group>";
 		};
+		AA6976682F8CA1760097803B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA69766D2F8CA4420097803B /* Bitcoin.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		AA8B9D622F78B2E10070C0A1 /* CoinImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,6 +349,9 @@
 			dependencies = (
 			);
 			name = Crypto;
+			packageProductDependencies = (
+				AA6976662F8CA0F20097803B /* Lottie */,
+			);
 			productName = Crypto;
 			productReference = AA5892EE2F6E26F40073EFE3 /* Crypto.app */;
 			productType = "com.apple.product-type.application";
@@ -361,6 +380,9 @@
 				Base,
 			);
 			mainGroup = AA5892E52F6E26F30073EFE3;
+			packageReferences = (
+				AA6976652F8CA0F20097803B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = AA5892EF2F6E26F40073EFE3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -375,6 +397,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA69766E2F8CA4420097803B /* Bitcoin.json in Resources */,
 				AA3D6B812F8C2C3400FB3F52 /* Launch Screen.storyboard in Resources */,
 				AA5892F92F6E26F50073EFE3 /* Preview Assets.xcassets in Resources */,
 				AA5892F62F6E26F50073EFE3 /* Assets.xcassets in Resources */,
@@ -395,6 +418,7 @@
 				AA588EDB2F7B68F10024CA11 /* CoinLogoView.swift in Sources */,
 				AA3EE5E42F71EEA300594EA2 /* HomeViewModel.swift in Sources */,
 				AA8B9D6A2F79D97E0070C0A1 /* LocalFileManager.swift in Sources */,
+				AA69766C2F8CA2FE0097803B /* LottieView.swift in Sources */,
 				AAFAAD422F84508500CF2302 /* Date.swift in Sources */,
 				AA979E952F820D5600B6493B /* LoadingDetailView.swift in Sources */,
 				AA5892F22F6E26F40073EFE3 /* CryptoApp.swift in Sources */,
@@ -644,6 +668,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA6976652F8CA0F20097803B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA6976662F8CA0F20097803B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA6976652F8CA0F20097803B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		AA431C032F7C230E0027C239 /* PortfolioContainer.xcdatamodeld */ = {

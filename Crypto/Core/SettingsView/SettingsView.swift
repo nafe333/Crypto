@@ -17,15 +17,24 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                aboutAppSection
-                coinGeckoSection
-                aboutMeSection
-                applicationSection
+            ZStack {
+                Color.theme.background
+                    .ignoresSafeArea()
+                
+                List {
+                    aboutAppSection
+                        .listRowBackground(Color.theme.background.opacity(0.5))
+                    coinGeckoSection
+                        .listRowBackground(Color.theme.background.opacity(0.5))
+                    aboutMeSection
+                        .listRowBackground(Color.theme.background.opacity(0.5))
+                    applicationSection
+                        .listRowBackground(Color.theme.background.opacity(0.5))
+                }
+                .scrollContentBackground(.hidden)
             }
             .font(.headline)
             .tint(.blue)
-            
             .listStyle(GroupedListStyle())
             .navigationTitle("Settings")
             .toolbar(content: {
@@ -33,8 +42,6 @@ struct SettingsView: View {
                     XMarkButton(dismiss: _dismiss)
                 }
             })
-            
-
         }
     }
 }
@@ -77,7 +84,6 @@ extension SettingsView {
                     .fontWeight(.medium)
             }
             .padding(.vertical)
-
         }
 
     }
@@ -117,7 +123,6 @@ extension SettingsView {
                         
                         Text("Junior iOS Developer and ITI graduate ")
                             .font(.caption)
-                        
                     }
                 }
             }

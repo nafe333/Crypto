@@ -115,6 +115,7 @@ extension HomeView {
             ForEach(vm.allCoins) { coin in
                 CoinRowView(coin: coin, showHoldingsColumn: false)
                     .listRowInsets(.init(top: 8, leading: 0, bottom: 8, trailing: 8))
+                    .listRowBackground(Color.theme.background)
                     .onTapGesture {
                         segue(coin: coin)
                     }
@@ -137,6 +138,7 @@ extension HomeView {
             ForEach(vm.portfolioCoins) { coin in
                 CoinRowView(coin: coin, showHoldingsColumn: true)
                     .listRowInsets(.init(top: 8, leading: 0, bottom: 8, trailing: 8))
+                    .listRowBackground(Color.theme.background)
 
             }
         }

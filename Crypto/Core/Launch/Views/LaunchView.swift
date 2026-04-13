@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Lottie
 
 struct LaunchView: View {
     @State private var loadingText: [String] = "Loading your portfolio..".map{ String($0)}
@@ -19,15 +20,16 @@ struct LaunchView: View {
         ZStack {
             Color.launch.background
                 .ignoresSafeArea()
-            Image("logo-transparent")
-                .resizable()
+            
+            LottieView(name: "Bitcoin")
                 .frame(width: 100, height: 100)
+                .scaleEffect(1.0) 
+                .padding(.bottom, 20)
             
             ZStack {
                 if showLoadingText {
                     HStack(spacing: 0) {
-                        ForEach(loadingText.indices) { index in
-                            
+                        ForEach(loadingText.indices, id: \.self) { index in
                             Text(loadingText[index])
                                 .font(.headline)
                                 .fontWeight(.heavy)
@@ -36,12 +38,7 @@ struct LaunchView: View {
                                 .offset(y: counter == index ? -5 : 0)
                         }
                     }
-                   
-                    
-                    
-                        
                 }
-                
             }
             .offset(y: 70)
         }
