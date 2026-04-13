@@ -16,7 +16,10 @@ import Foundation
  CG-qyCXc2qh3hf183NcLWsruonC
  */
 
-struct CoinModel: Codable, Identifiable {
+struct CoinModel: Codable, Identifiable, Hashable {
+
+    
+    
     
        //MARK: - Properties
     let id, symbol, name: String
@@ -52,6 +55,6 @@ struct CoinModel: Codable, Identifiable {
 }
 
 // MARK: - SparklineIn7D
-struct SparklineIn7D: Codable {
+struct SparklineIn7D: Codable, Hashable {
     let price: [Double]?
 }

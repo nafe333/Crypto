@@ -150,7 +150,7 @@ addSubscribers()
         if previousValue == 0 {
             percentageChange = 0
         } else {
-            percentageChange = ((portfolioValue - previousValue) / previousValue * 100)
+            percentageChange = ((portfolioValue - previousValue) / previousValue)
         }
         
         let portfolio = StatisticModel(

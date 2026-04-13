@@ -22,28 +22,23 @@ struct PortfolioView: View {
                 VStack(alignment: .leading, spacing: 0){
                     SearchBarView(searchText: $vm.searchText)
                     coinLogoList
-                    if selectedCoin != nil && !quantityText.isEmpty {
+                    if selectedCoin != nil {
                         portfolioInputSection
                     }
                 }
-                }
-            
+            }
             .navigationTitle("Edit Portfolio")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     XMarkButton(dismiss: _dismiss)
-                    
                 }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     trailingBarButtonItem
                 }
             }
-            }
-            
         }
-
     }
+}
 
 
 #Preview {
@@ -71,8 +66,6 @@ extension PortfolioView {
             }
             .frame(height: 120)
             .padding(.leading)
-            
-            
         }
         .scrollIndicators(.hidden)
     }

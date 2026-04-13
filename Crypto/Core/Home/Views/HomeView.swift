@@ -11,7 +11,12 @@ struct HomeView: View {
        //MARK: - Properties
     @State private var showPortfolio: Bool = false
     @State private var showPortfolioView: Bool = false
+    @State private var showSettingsView: Bool = false
     @EnvironmentObject private var vm: HomeViewModel
+    @State private var selectedCoin: CoinModel? = nil
+    @State private var coinSelected: Bool = false
+    
+    
     
        //MARK: - UI
     
@@ -34,12 +39,33 @@ struct HomeView: View {
                     allCoinsList
                         .transition(.move(edge: .leading))
                 } else {
-                    portfolioCoinsList
+                    ZStack {
+                        if vm.portfolioCoins.isEmpty && vm.searchText.isEmpty {
+                            portfolioEmptyView
+                        } else {
+                            portfolioCoinsList
+                        }
+                        
+                    }
+                    
                         .transition(.move(edge: .trailing))
                 }
                 Spacer(minLength: 0)
             }
+            .sheet(isPresented: $showSettingsView, content: {
+                SettingsView()
+            })
         }
+        .background(
+            // deprecated but wil be treated later on 
+            NavigationLink(destination: LoadingDetailView(coin: $selectedCoin),
+                       isActive: $coinSelected,
+                       label: {
+                           EmptyView()
+                       })
+            
+            
+        )
     }
 }
 
@@ -60,6 +86,8 @@ extension HomeView {
                 .onTapGesture {
                     if showPortfolio {
                         showPortfolioView.toggle()
+                    } else {
+                        showSettingsView.toggle()
                     }
                 }
                 .background(
@@ -87,9 +115,21 @@ extension HomeView {
             ForEach(vm.allCoins) { coin in
                 CoinRowView(coin: coin, showHoldingsColumn: false)
                     .listRowInsets(.init(top: 8, leading: 0, bottom: 8, trailing: 8))
+                    .onTapGesture {
+                        segue(coin: coin)
+                    }
             }
         }
         .listStyle(PlainListStyle())
+    }
+    
+    private var portfolioEmptyView: some View {
+        Text("You have no coins in your portfolio! \n Click the + Button to add some and get started 🫡")
+            .font(.callout)
+            .foregroundStyle(Color.theme.accent)
+            .fontWeight(.medium)
+            .multilineTextAlignment(.center)
+            .padding(50)
     }
     
     private var portfolioCoinsList: some View {
@@ -159,5 +199,10 @@ extension HomeView {
         .font(.caption)
         .foregroundColor(Color.theme.secondaryText)
         .padding(.horizontal)
+    }
+    
+    private func segue(coin: CoinModel) {
+        selectedCoin = coin
+        coinSelected.toggle()
     }
 }

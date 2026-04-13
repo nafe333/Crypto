@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct LoadingDetailView: View {
+    @Binding var coin: CoinModel?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if let coin = coin {
+            ZStack {
+                DetailView(coin: coin)
+            }
+        }
     }
 }
 
-#Preview {
-    LoadingDetailView()
-}

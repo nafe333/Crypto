@@ -42,6 +42,8 @@ class CoinImageService {
                 }
                 return image
             }
+            .receive(on: DispatchQueue.main)
+
             .sink(
                 receiveCompletion: { completion in
                     NetworkingManager.handleCompletion(completion: completion)
