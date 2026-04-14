@@ -15,11 +15,8 @@ struct HomeView: View {
     @EnvironmentObject private var vm: HomeViewModel
     @State private var selectedCoin: CoinModel? = nil
     @State private var coinSelected: Bool = false
-    
-    
-    
+
        //MARK: - UI
-    
     var body: some View {
         ZStack{
             Color.theme.background
@@ -159,34 +156,21 @@ extension HomeView {
                     vm.sortOption = vm.sortOption == .rank ? .rankReversed : .rank
                 }
             }
-            
             Spacer()
             if showPortfolio {
-                HStack(spacing: 4){
-                    Text("Holdings")
-                    Image(systemName: "chevron.down")
-                        .opacity(vm.sortOption == .holdings || vm.sortOption == .holdings ? 1.0 : 0.0)
-                        .rotationEffect(Angle(degrees: vm.sortOption == .holdings ? 0 : 180))
-                }
+                holdingsHeaderView
                 .onTapGesture {
                     withAnimation(.default) {
                         vm.sortOption = vm.sortOption == .holdings ? .holdingsReversed : .holdings
                     }
                 }
             }
-            
-            HStack(spacing: 4){
-                Text("Price")
-                Image(systemName: "chevron.down")
-                    .opacity(vm.sortOption == .price || vm.sortOption == .priceReversed ? 1.0 : 0.0)
-                    .rotationEffect(Angle(degrees: vm.sortOption == .price ? 0 : 180))
-            }
+           priceHeaderView
             .onTapGesture {
                 withAnimation(.default) {
                     vm.sortOption = vm.sortOption == .price ? .priceReversed : .price
                 }
             }
-            
             .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
             Button {
                 withAnimation(.linear(duration: 2.0)) {
@@ -202,6 +186,25 @@ extension HomeView {
         .foregroundColor(Color.theme.secondaryText)
         .padding(.horizontal)
     }
+    
+    private var holdingsHeaderView: some View {
+        HStack(spacing: 4){
+            Text("Holdings")
+            Image(systemName: "chevron.down")
+                .opacity(vm.sortOption == .holdings || vm.sortOption == .holdings ? 1.0 : 0.0)
+                .rotationEffect(Angle(degrees: vm.sortOption == .holdings ? 0 : 180))
+        }
+    }
+    private var priceHeaderView: some View {
+        HStack(spacing: 4){
+            Text("Holdings")
+            Image(systemName: "chevron.down")
+                .opacity(vm.sortOption == .holdings || vm.sortOption == .holdings ? 1.0 : 0.0)
+                .rotationEffect(Angle(degrees: vm.sortOption == .holdings ? 0 : 180))
+        }
+    }
+    
+    
     
     private func segue(coin: CoinModel) {
         selectedCoin = coin

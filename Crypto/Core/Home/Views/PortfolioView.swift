@@ -27,6 +27,8 @@ struct PortfolioView: View {
                     }
                 }
             }
+            .background(Color.theme.background)
+            .scrollContentBackground(.hidden)
             .navigationTitle("Edit Portfolio")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -64,6 +66,8 @@ extension PortfolioView {
                         }
                 }
             }
+            .background(Color.theme.background)
+               .scrollIndicators(.hidden)
             .frame(height: 120)
             .padding(.leading)
         }

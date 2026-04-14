@@ -32,6 +32,7 @@ struct ChartView: View {
         VStack{
             chartView
                 .frame(height: 200)
+                .clipped()
                 .background(chartBackground)
                 .overlay(chartAxis.padding(.horizontal, 4)
                          , alignment: .leading)

@@ -18,9 +18,9 @@ struct DetailView: View {
     ]
     private let spacing: CGFloat = 30.0
     @State private var showingDescription: Bool = false
+    @State private var chartType: ChartType = .line
 
-    
-    
+
     init(coin: CoinModel) {
         _vm = StateObject(wrappedValue: DetailViewModel(coin: coin))
     }
@@ -28,8 +28,12 @@ struct DetailView: View {
     var body: some View {
         ScrollView {
             VStack {
-                ChartView(coin: vm.coin)
-                    .padding(.vertical)
+                VStack {
+                    chartTabs
+                    swipeableCharts
+                }
+                .padding(.vertical)
+                
                 VStack(spacing: 20) {
                     overviewTitle
                     Divider()
@@ -141,5 +145,64 @@ extension DetailView {
         }
         .tint(.blue)
         .padding()
+    }
+    
+    private var chartTabs: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                ForEach(ChartType.allCases, id: \.self) { type in
+                    Text(title(for: type))
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 12)
+                        .background(
+                            chartType == type
+                            ? Color.theme.accent.opacity(0.5)
+                            : Color.theme.background.opacity(0.5)
+                        )
+                        .foregroundStyle(
+                            chartType == type
+                            ? .white
+                            : Color.theme.secondaryText
+                        )
+                        .clipShape(Capsule())
+                        .onTapGesture {
+                            withAnimation(.easeInOut) {
+                                chartType = type
+                            }
+                        }
+                }
+            }
+            .padding(.horizontal)
+        }
+    }
+    private func title(for type: ChartType) -> String {
+        switch type {
+        case .line: return "Line"
+        case .points: return "Points"
+        case .volume: return "Volume"
+        }
+    }
+    private var swipeableCharts: some View {
+        TabView(selection: $chartType) {
+            
+            ChartView(coin: vm.coin)
+                .tag(ChartType.line)
+            
+            PointChartView(coin: vm.coin)
+                .tag(ChartType.points)
+            
+            Group {
+                if let chartData = vm.coinDataForChart {
+                    VolumeChartView(coinData: chartData)
+                } else {
+                    ProgressView()
+                }
+            }
+            .tag(ChartType.volume)
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .frame(height: 220)
     }
 }

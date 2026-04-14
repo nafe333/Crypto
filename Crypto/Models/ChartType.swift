@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum ChartType: Int, CaseIterable {
+    case line
+    case points
+    case volume
+}

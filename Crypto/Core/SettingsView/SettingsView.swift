@@ -24,10 +24,11 @@ struct SettingsView: View {
                 List {
                     aboutAppSection
                         .listRowBackground(Color.theme.background.opacity(0.5))
-                    coinGeckoSection
-                        .listRowBackground(Color.theme.background.opacity(0.5))
                     aboutMeSection
                         .listRowBackground(Color.theme.background.opacity(0.5))
+                    coinGeckoSection
+                        .listRowBackground(Color.theme.background.opacity(0.5))
+
                     applicationSection
                         .listRowBackground(Color.theme.background.opacity(0.5))
                 }
@@ -93,40 +94,45 @@ extension SettingsView {
             VStack(alignment: .leading, spacing: 16){
                 
                 HStack(spacing: 16) {
-                    Image("thorifenn")
-                        .resizable()
-                        .frame( width: 60, height: 60)
-                        .clipShape(Circle())
-                        .shadow(color: Color.theme.accent,radius: 5)
+                    developerImageView
                     VStack(alignment: .leading,spacing: 8) {
                         
                         HStack(spacing: 8) {
                             Text("Nafea Mostafa")
                                 .font(.headline)
                             
-                            Link(destination: linkedInUrl, label: {
+                            Button {
+                                UIApplication.shared.open(linkedInUrl)
+                            } label: {
                                 Image("linkedin")
                                     .renderingMode(.original)
                                     .resizable()
                                     .frame(width: 25, height: 25)
                                     .clipShape(Circle())
-                            })
+                            }
+                            .buttonStyle(.plain)
                             
-                            Link(destination: githubUrl, label: {
+                            Button {
+                                UIApplication.shared.open(githubUrl)
+                            } label: {
                                 Image("github")
                                     .renderingMode(.original)
                                     .resizable()
                                     .frame(width: 25, height: 25)
                                     .clipShape(Circle())
-                            })
+                            }
+                            .buttonStyle(.plain)
                         }
                         
-                        Text("Junior iOS Developer and ITI graduate ")
-                            .font(.caption)
+                        Text("iOS developer and ITI graduate  who enjoys building clean apps with Swift, UIKit and SwiftUI.")         .font(.caption)
+                            .multilineTextAlignment(.center)
                     }
                 }
             }
             .padding(.vertical)
+            .padding(.horizontal)
+            
+            .listRowInsets(EdgeInsets())
         }
     }
     private var applicationSection: some View {
@@ -136,5 +142,13 @@ extension SettingsView {
             Link("Company Website", destination: defaultUrl)
             Link("Learn More", destination: defaultUrl)
         }
+    }
+    
+    private var developerImageView: some View {
+        LottieView(name: "developer")
+            .scaleEffect(1.0)
+            .frame( width: 120, height: 120)
+            .clipShape(Circle())
+            .shadow(color: Color.theme.accent,radius: 5)
     }
 }

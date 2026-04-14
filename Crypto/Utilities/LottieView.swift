@@ -11,25 +11,43 @@ import Lottie
 struct LottieView: UIViewRepresentable {
     
     let name: String
+    var loop: LottieLoopMode = .loop
+    var speed: CGFloat = 1.5
     
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView(frame: .zero)
-        
-        let animationView = LottieAnimationView(name: name)
-        animationView.loopMode = .loop
-        animationView.play()
-        animationView.contentMode = .scaleAspectFit
-        
-        animationView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(animationView)
-        
-        NSLayoutConstraint.activate([
-            animationView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            animationView.heightAnchor.constraint(equalTo: view.heightAnchor)
-        ])
-        
-        return view
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
     }
     
-    func updateUIView(_ uiView: UIView, context: Context) {}
+    func makeUIView(context: Context) -> UIView {
+        let containerView = UIView(frame: .zero)
+        
+        let animationView = LottieAnimationView(name: name)
+        
+        animationView.loopMode = loop
+        animationView.animationSpeed = speed
+        animationView.contentMode = .scaleAspectFit
+        animationView.play()
+        
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(animationView)
+        
+        NSLayoutConstraint.activate([
+            animationView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            animationView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            animationView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            animationView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+        
+        context.coordinator.animationView = animationView
+        
+        return containerView
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {
+        context.coordinator.animationView?.play()
+    }
+    
+    class Coordinator {
+        var animationView: LottieAnimationView?
+    }
 }

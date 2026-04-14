@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct CoinChartData: Codable {
+    let prices, marketCaps, totalVolumes: [[Double]]?
+}
