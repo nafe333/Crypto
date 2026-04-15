@@ -12,6 +12,8 @@ struct VolumeChartView: View {
     private let data: [[Double]]
     private let minY: Double
     private let maxY: Double
+    @State private var animate: Bool = false
+
     
     init(coinData: CoinChartData){
         self.data = coinData.totalVolumes ?? []
@@ -33,25 +35,39 @@ struct VolumeChartView: View {
         }
         .font(.caption)
         .foregroundStyle(Color.theme.secondaryText)
-    }
-    
-    private var chart: some View {
-        Chart {
-            ForEach(data.indices, id: \.self) { index in
-                let item = data[index]
-                
-                if item.count >= 2 {
-                    BarMark(
-                        x: .value("Index", index),
-                        y: .value("Volume", item[1])
-                    )
-                    .foregroundStyle(Color.theme.accent.opacity(0.6))
+        .onAppear {
+            animate = false
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation(.easeInOut(duration: 1.2)) {
+                    animate = true
                 }
             }
         }
-        .chartYScale(domain: minY...maxY)
-        .chartXAxis(.hidden)
-        .chartYAxis(.hidden)
+    }
+    
+    private var chart: some View {
+        ZStack { 
+            Chart {
+                ForEach(data.indices, id: \.self) { index in
+                    let item = data[index]
+                    
+                    if item.count >= 2 {
+                        BarMark(
+                            x: .value("Index", Double(index)),
+                            y: .value("Volume", item[1]),
+                            width: .fixed(4)
+                        )
+                        .foregroundStyle(Color.theme.accent.opacity(0.6))
+                    }
+                }
+            }
+            .chartYScale(domain: minY...maxY)
+            .chartXAxis(.hidden)
+            .chartYAxis(.hidden)
+        }
+        .scaleEffect(y: animate ? 1 : 0, anchor: .bottom)
+        .animation(.easeInOut(duration: 1.2), value: animate)
     }
     
     private var chartBackground: some View {
