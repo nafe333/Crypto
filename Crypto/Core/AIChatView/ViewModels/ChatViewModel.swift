@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 class ChatViewModel: ObservableObject {
     
     @Published var messages: [ChatMessage] = []
     @Published var isLoading = false
+    private var cancellables = Set<AnyCancellable>()
     @Published var suggestions: [String] = [
         "What is Bitcoin?",
         "Explain Ethereum",
@@ -18,37 +20,45 @@ class ChatViewModel: ObservableObject {
         "What is market cap?"
     ]
     
+    
     func send(_ text: String) {
         let userMessage = ChatMessage(role: "user", content: text)
         messages.append(userMessage)
         
         isLoading = true
         
-        // 👇 Update suggestions immediately (before AI responds)
         updateSuggestions(for: text)
         
         let systemMessage = ChatMessage(
             role: "system",
             content: """
-            You are a crypto assistant inside a trading app.
-            Rules:
-            - Only answer crypto, finance, and trading related questions.
-            - If user asks unrelated questions, respond: "I only answer crypto-related questions."
-            - Be concise and practical.
-            """
+                You are a crypto assistant inside a trading app.
+                Rules:
+                - Only answer crypto-related questions.
+                - Be concise.
+                """
         )
         
         let fullMessages = [systemMessage] + messages
         
-        AIService.shared.sendMessage(messages: fullMessages) { [weak self] reply in
-            DispatchQueue.main.async {
+        AIService.shared.sendMessage(messages: fullMessages)
+            .sink { [weak self] completion in
+                self?.isLoading = false
+                
+                if case .failure(let error) = completion {
+                    self?.messages.append(
+                        ChatMessage(role: "assistant", content: "❌ \(error.localizedDescription)")
+                    )
+                }
+                
+            } receiveValue: { [weak self] reply in
                 self?.messages.append(
                     ChatMessage(role: "assistant", content: reply)
                 )
-                self?.isLoading = false
             }
-        }
+            .store(in: &cancellables)
     }
+    
     
     private func updateSuggestions(for input: String) {
         let lower = input.lowercased()
