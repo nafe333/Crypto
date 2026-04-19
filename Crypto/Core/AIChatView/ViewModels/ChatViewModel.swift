@@ -36,6 +36,7 @@ class ChatViewModel: ObservableObject {
                 Rules:
                 - Only answer crypto-related questions.
                 - Be concise.
+                - just stich with the question user asks pleaaaase.
                 """
         )
         
