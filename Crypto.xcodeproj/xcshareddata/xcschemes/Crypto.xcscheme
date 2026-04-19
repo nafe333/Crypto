@@ -53,7 +53,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "OPENAI_API_KEY"
-            value = "6b129f702bb90b8e3f1659b2dbaee93bbb7c1393d34d34a6d00f86913973b700"
+            value = "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"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
