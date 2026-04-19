@@ -24,11 +24,8 @@ class ChatViewModel: ObservableObject {
     func send(_ text: String) {
         let userMessage = ChatMessage(role: "user", content: text)
         messages.append(userMessage)
-        
         isLoading = true
-        
         updateSuggestions(for: text)
-        
         let systemMessage = ChatMessage(
             role: "system",
             content: """
@@ -39,16 +36,14 @@ class ChatViewModel: ObservableObject {
                 - just stich with the question user asks pleaaaase.
                 """
         )
-        
         let fullMessages = [systemMessage] + messages
-        
         AIService.shared.sendMessage(messages: fullMessages)
             .sink { [weak self] completion in
                 self?.isLoading = false
                 
                 if case .failure(let error) = completion {
                     self?.messages.append(
-                        ChatMessage(role: "assistant", content: "❌ \(error.localizedDescription)")
+                        ChatMessage(role: "assistant", content: " \(error.localizedDescription)")
                     )
                 }
                 
